@@ -1,0 +1,75 @@
+* fls -- find last (most-significant) bit set
+	static __always_inline int fls(int x);
+	fls(0) = 0;
+	fls(1) = 1;
+	fls(0x80000000) = 32;
+	# 0x80000000
+	# bin  1  0  0  0  0000 0000 ... 0000
+	#     32 31 30 29 ....           4321
+	--> man ffs.
+
+* DISK_MAX_PARTS
+	linux/genhd.h
+
+* MINORBITS
+	linux/kdev_t.h
+	minor number bits width
+
+* register_blkdev
+  unregister_blkdev
+	linux/fs.h
+	if failed, returns -EIO normally (like as loop.c)
+
+* kzalloc
+	linux/slab.h
+	allocate memory. The memory is set to zero
+	@size: how many bytes of memory are required.
+	@flags: the type of memory to allocate (see kmalloc).
+	static inline void *kzalloc(size_t size, gfp_t flags)
+	{
+		return kmalloc(size, flags | __GFP_ZERO);
+	}
+
+* blk_alloc_queue
+	linux/blkdev.h
+	struct request_queue *blk_alloc_queue(gfp_t);
+
+* alloc_disk
+	linux/genhd.h
+	@num minor nums
+
+* init_waitqueue_head
+	linux/wait.h
+
+* add_disk
+	linux/genhd.h
+
+* blk_register_region
+  blk_unregister_region
+	linux/genhd.h
+
+* del_gendisk
+	linux/genhd.h
+
+* blk_cleanup_queue
+	linux/blkdev.h
+
+* put_disk
+	linux/genhd.h
+
+* kfree
+	linux/slab.h
+
+* struct block_device_operations
+	linux/fs.h
+
+* __module_get
+	linux/module.h
+	increment ref cont
+
+* fget/fput
+	linux/file.h
+
+* blk_queue_make_request
+	linux/blkdev.h
+		

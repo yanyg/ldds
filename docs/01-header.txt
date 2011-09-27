@@ -1,0 +1,50 @@
+1. linux/init.h
+	Include some macros like as: module_init, module_exit, __init, __initdata, __exit, __exitdata, etc.
+
+2. linux/module.h
+	Defines the macro THIS_MODULE, which references to extern struct module __this_module. Most registerable structures have an owner field, auch as in the file_operations structure. Set this field to the macro THIS_MODULE.
+	Module info macros:
+		MODULE_INFO(tag, info)		--> generic info of form tag = "ino"
+		MODULE_ALIAS(_alias)		--> For userspace, you can also call me _alias, implement: MODULE_INFO(alias, _alias)
+		MODULE_LICENSE(_license)	--> licenses. implement: MODULE_INFO(license, _license).
+			licenses of currently free software modules: "GPL" "GPL v2" "GPL and additional rights" "Dual BSD/GPL" "Dual MIT/GPL" "Dual MPL/GPL" "Proprietary"
+		MODULE_AUTHOR(_author)		--> author, user "Name <email>" "Name". MODULE_INFO(author, _author)
+		MODULE_DESCRIPTION()		--> What the module does. MODULE_INFO(description, _description)
+		MODULE_PARAM_DESC(_param, desc)
+		MODULE_DEVICE_TABLE(_type, name)
+		MODULE_VERSION(_version)
+		MODULE_FIRMWARE(_firmware)
+
+		try_module_get()/module_put()
+
+		EXPORT_SYMBOL(sym)
+		EXPORT_SYMBOL_GPL(sym)			--> Only be seen by modules with a MODULE_LICENSE() that specifies a GPL compatiable license.
+		EXPORT_SYMBOL_GPL_FUTURE(sym)
+3. linux/moduleparam.h
+		module_param(name, type, perm)
+		module_param_array(name, type, nump, perm)
+
+4. linux/kernel.h
+		printk functions. and etc.
+		container_of
+
+5. linux/list.h
+		double-linked list api.
+
+6. linux/types.h
+		dev_t, MAJOR(), MINOR(), etc. definition
+
+7. linux/fs.h
+		struct file_operations, struct file, struct inode, etc.
+		alloc_chrdev_region, register_chrdev_region, unregister_chrdev_region, etc.
+
+8. linux/cdev.h
+		cdev_init, cdev_alloc, etc.
+
+9. linux/uaccess.h
+		copy_from_user, copy_to_user, etc.
+
+10. linux/errno.h, asm-generic/errno.h
+		errno definitions, like as ENOBUFS, EINVAL, etc.
+
+
