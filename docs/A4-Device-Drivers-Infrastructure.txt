@@ -1,0 +1,111 @@
+* From
+	DocBook/device-drivers/devdrivers.html
+
+* driver_for_each_device
+
+	** Name
+	driver_for_each_device	--	Iterator for devices bound to a driver
+
+	** Synopsis
+	int driver_for_each_device(	struct device_driver *drv,
+								struct device *start,
+								void *data,
+								int (*fn)(struct device *, void *));
+	** Arguments
+	drv		--	Driver we're iterating
+	start	--	Device to begin with
+	data	--	Data to pass to the callback
+	fn		--	Function to call for each device
+
+	** Description
+	Iterate over the drv's list of devices calling fn for each one.
+
+* driver_find_device
+
+	** Name
+	driver_find_device	--	device iterator for locating a particular device
+
+	** Synopsis
+	struct device * driver_find_device(	struct device_driver *drv,
+										struct device *start,
+										void *data,
+										int (*match)(struct device *dev, void *data));
+										);
+
+	** Arguments
+	drv		--	The device's driver
+	start	--	Device to begin with
+	data	--	data to pass to match function
+	match	--	Callback function to check device
+
+	** Description
+	This is similar to the driver_for_each_device function above, but it returns a reference to a device that is 'found' for later use, as determined by the match callback.
+	The callback should return 0 if the device doesn't match and non-zero if it does. If the callback returns non-zero, this function will return to the caller and not iterate over any more devices.
+
+* driver_create_file
+
+	** Name
+	driver_create_file	--	create sysfs file for driver.
+
+	** Synopsis
+	int driver_create_file(	struct device_driver * drv,
+							const struct driver_attribute *attr);
+
+	** Arguments
+	drv		--	Driver
+	attr	--	Driver attribute descriptor
+
+* driver_remove_file
+
+	** Name
+	driver_remove_file	--	remove sysfs file for driver.
+
+	** Synopsis
+	void driver_remove_file(	struct device_driver * drv,
+								const struct driver_attribute * attr);
+
+	** Arguments
+	drv		--	Driver
+	attr	--	Driver attribute descriptor.
+
+* driver_add_kobj
+
+	** Name
+	driver_add_kobj	--	add a kobject below the specified driver
+
+	** Synopsis
+	int driver_add_kobj(	struct device_driver * drv,
+							struct kobject * kobj,
+							const char * fmt,
+							...);
+
+	** Arguments
+	drv		--	Requesting device driver
+	kobj	--	Kobject to add below this driver
+	fmt		--	Format string that names the kobject
+	...		--	Variable arguments
+
+	** Description
+	You really don't want to do this, this is only here due to one looney iseries, go poke those developers if you are annoyed about this.
+
+* get_driver
+
+	** Name
+	get_driver	--	increment driver reference count
+
+	** Synopsis
+	struct device_driver * get_driver(struct device_driver * drv);
+
+	** Arguments
+	drv	--	driver
+
+* put_driver
+
+	** Name
+	put_driver	--	decrement driver's refcount
+
+	** Synopsis
+	void put_driver(struct device_driver * drv);
+
+	** Arguments
+	drv	--	Driver
