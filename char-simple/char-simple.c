@@ -85,6 +85,8 @@ static int __init char_simple_init(void)
 		return r;
 	}
 
+	device_create(cs_class, NULL, cs_devnum, NULL, "char_simple0");
+
 	return 0;
 }
 
@@ -92,6 +94,7 @@ static void __exit char_simple_exit(void)
 {
 	cdev_del(&cs_cdev);
 	unregister_chrdev_region(cs_devnum, cs_count);
+	device_destroy(cs_class, cs_devnum);
 	class_destroy(cs_class);
 	printk(KERN_INFO "exit char_simple ...\n");
 }
