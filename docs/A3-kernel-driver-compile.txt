@@ -1,0 +1,42 @@
+* Compile Kernel Drivers Along
+	~$ cd linux-source-tree
+	# e.g.: compile brd
+	~$ cd drivers/block
+	# create Makefile:
+	~$ mv Makefile Makefile.bak
+	~$ vi Makefile
+	obj-m := brd.o
+	~$ make -C /lib/modules/$(uname -r)/build M=$(pwd) modules
+
+* Multiple source file
+	# example
+	~$ vi Makefile
+	eg-objs := 1.c 2.c 3.c
+	obj-m := eg.o
+	~$ make -C /lib/modules/$(uname -r)/build M=$(pwd) modules
+
+* Completion Makefile
+	# e.g. brd.ko
+	~$ vi Makefile
+	ifneq ($(KERNELRELEASE),)
+	obj-m := brd.o
+	else
+	modules:
+		$(MAKE) -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+	endif
+
+	clean:
+		rm -fr *.o .brd.* *.ko *.mod.c .tmp*
+----
+# Makefile:
+ifneq ($(KERNELRELEASE),)
+#brd-objs := brd.o
+obj-m := brd.o
+else
+modules:
+	$(MAKE) -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+endif
+clean:
+	rm *.o .brd.* *.ko *.mod.c .tmp* -fr
+
+----
