@@ -85,7 +85,7 @@ static int __init char_simple_init(void)
 		return r;
 	}
 
-	device_create(cs_class, NULL, cs_devnum, NULL, "char_simple0");
+	device_create(cs_class, NULL, cs_devnum, NULL, CS_NAME);
 
 	return 0;
 }
