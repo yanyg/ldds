@@ -4,6 +4,18 @@
 
 #include <linux/genhd.h>
 #include <linux/blkdev.h>
+#include <linux/radix-tree.h>
+
+struct sbrd_device {
+	int sbrd_number;
+
+	struct request_queue	*sbrd_queue;
+	struct gendisk		*sbrd_disk;
+	struct list_head	sbrd_list;
+
+	spinlock_t		sbrd_lock;
+	struct radix_tree_root	*sbrd_pages;
+};
 
 /* module params */
 static int sbrd_major;
@@ -44,6 +56,12 @@ int params_init(void)
 
 	return 0;
 }
+
+static const struct block_device_operations sbrd_fops = {
+	.owner =		THIS_MODULE,
+	.ioctl =		sbrd_ioctl,
+	.direct_access =	sbrd_direct_access,
+};
 
 static __init int sbrd_init(void)
 {
